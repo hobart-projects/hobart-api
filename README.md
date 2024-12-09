@@ -1,2 +1,0 @@
-# hobart-api
-common api
