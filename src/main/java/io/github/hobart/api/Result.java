@@ -8,7 +8,7 @@ public class Result<T> implements ResultApi<T, Result<T>>, Serializable {
 
     public static final long serialVersionUID = -1L;
 
-    private String code;
+    private int code;
 
     private String msg;
 
@@ -17,12 +17,12 @@ public class Result<T> implements ResultApi<T, Result<T>>, Serializable {
     public Result() {
     }
 
-    public Result(String code, String msg) {
+    public Result(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-    public Result(String code, String msg, T data) {
+    public Result(int code, String msg, T data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
@@ -42,11 +42,11 @@ public class Result<T> implements ResultApi<T, Result<T>>, Serializable {
         this.data = data;
     }
 
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
     }
 
@@ -66,5 +66,13 @@ public class Result<T> implements ResultApi<T, Result<T>>, Serializable {
     @Override
     public T get() {
         return this.data;
+    }
+
+    public static <T> Result<T> failure(String msg) {
+        return Results.failure(msg);
+    }
+
+    public static <T> Result<T> success(T data) {
+        return Results.success(data);
     }
 }

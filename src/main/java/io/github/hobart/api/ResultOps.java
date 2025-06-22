@@ -51,7 +51,7 @@ public class ResultOps<T> {
      * 读取{@code code}的值
      * @return 返回code的值
      */
-    public String getCode() {
+    public int getCode() {
         return original.getCode();
     }
 
@@ -85,7 +85,7 @@ public class ResultOps<T> {
      * @param code 基准值
      * @return 返回ture表示相等
      */
-    public boolean codeEquals(String code) {
+    public boolean codeEquals(int code) {
         return Objects.equals(original.getCode(), code);
     }
 
@@ -94,7 +94,7 @@ public class ResultOps<T> {
      * @param code 基准值
      * @return 返回ture表示不相等
      */
-    public boolean codeNotEquals(String code) {
+    public boolean codeNotEquals(int code) {
         return !codeEquals(code);
     }
 
@@ -126,7 +126,7 @@ public class ResultOps<T> {
      * @return 返回实例，以便于继续进行链式操作
      * @throws Ex 断言失败时抛出
      */
-    public <Ex extends Exception> ResultOps<T> assertCode(String expect, Function<? super Result<T>, ? extends Ex> func)
+    public <Ex extends Exception> ResultOps<T> assertCode(int expect, Function<? super Result<T>, ? extends Ex> func)
             throws Ex {
         if (codeNotEquals(expect)) {
             throw func.apply(original);

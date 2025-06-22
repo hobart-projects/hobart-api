@@ -2,6 +2,7 @@ package io.github.hobart.api;
 
 import io.github.hobart.api.enums.ResultCodeEnum;
 
+import java.util.List;
 import java.util.Objects;
 
 import static java.util.Objects.requireNonNull;
@@ -21,6 +22,14 @@ public class Results {
         return new Result<>(ResultCodeEnum.SUCCESS.getCode(), ResultCodeEnum.SUCCESS.getDesc(), data);
     }
 
+    public static <T> PageResult<T> success(List<T> list, long total, int pageSize) {
+        return PageResult.success(list, total, pageSize);
+    }
+
+    public static <T> PageResult<T> success(List<T> list, long total, int pageNum, int pageSize) {
+        return PageResult.success(list, total, pageNum, pageSize);
+    }
+
     public static <T> Result<T> success(T data, String msg) {
         requireNonNull(data, "data not null");
         return new Result<>(ResultCodeEnum.SUCCESS.getCode(), msg, data);
@@ -34,8 +43,11 @@ public class Results {
         return new Result<>(ResultCodeEnum.FAILURE.getCode(), msg == null ? ResultCodeEnum.FAILURE.getDesc() : msg);
     }
 
-    public static <T> Result<T> failure(String code, String msg) {
+    public static <T> Result<T> failure(Integer code, String msg) {
         requireNonNull(code, "code not null");
+        if (ResultCodeEnum.isSuccess(code)) {
+            throw new IllegalArgumentException("code " + code + " is success");
+        }
         return new Result<>(code, msg == null ? ResultCodeEnum.FAILURE.getDesc() : msg);
     }
 
@@ -52,7 +64,7 @@ public class Results {
         return new Result<>(ResultCodeEnum.FAILURE.getCode(), throwable.getMessage());
     }
 
-    public static <T> Result<T> result(T data, String code, String msg) {
+    public static <T> Result<T> result(T data, int code, String msg) {
         return new Result<>(code, msg, data);
     }
 
