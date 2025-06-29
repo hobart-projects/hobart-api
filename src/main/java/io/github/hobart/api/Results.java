@@ -2,6 +2,7 @@ package io.github.hobart.api;
 
 import io.github.hobart.api.enums.ResultCodeEnum;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,6 +34,14 @@ public class Results {
     public static <T> Result<T> success(T data, String msg) {
         requireNonNull(data, "data not null");
         return new Result<>(ResultCodeEnum.SUCCESS.getCode(), msg, data);
+    }
+
+    public static <T> PageResult<T> emptyPage() {
+        return PageResult.success(Collections.emptyList(), 0L, 10);
+    }
+
+    public static <T> PageResult<T> emptyPage(int pageSize) {
+        return PageResult.success(Collections.emptyList(), 0L, pageSize);
     }
 
     public static <T> Result<T> failure() {
